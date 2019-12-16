@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h1>Hi, {{ current_user.username }}!</h1>
+
+    <h1>Search Book</h1>
+    <form method="POST" action="./search" style="display: inline">
+        <input type="text" name="isbn">
+        <input type="submit" value="Search">
+    </form>
+
+    <br>
+    <br>
+
+    <h2>Books Founds</h2>
+    <p>
+        {{book.title}}
+        {{book.author}}
+    </p>
+    <img src="{{book.thumbnail}}">
+
+    <form method="post" action="/add">
+
+        <input type="hidden" value="{{book.title}}" name="title">
+        <input type="hidden" value="{{book.author}}" name="author">
+        <input type="hidden" value="{{book.page_count}}" name="page_count">
+        <input type="hidden" value="{{book.maturity_rating}}" name="maturity_rating">
+        <input type="hidden" value="{{book.thumbnail}}" name="thumbnail">
+        <input type="submit" value="Add Book">
+
+    </form>
+{% endblock %}
+</body>
+</html>

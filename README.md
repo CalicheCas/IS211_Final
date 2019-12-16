@@ -1,3 +1,16 @@
+# Author
+
+Carlo Casas
+
+# How to Run the App
+
+Traverse to project root and run: "flask run" from cli.
+
+If that does not work, run:
+
+$:virtualenv env
+$:venv\Scripts\activate 
+
 # IS211_Assignment12
 Web Development with Flask part two
 

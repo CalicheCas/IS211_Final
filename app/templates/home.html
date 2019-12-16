@@ -2,12 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>home</title>
+    <title>Home Page</title>
 </head>
-<body>
-    <form method="POST" action="/">
-      <input type="text" name="title">
-      <input type="submit" value="Add">
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h1>Hi, {{ current_user.username }}!</h1>
+
+    <h1>Add book</h1>
+    <form method="post" action="/home" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=32) }}<br>
+            {% for error in form.title.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.author.label }}<br>
+            {{ form.author(size=32) }}<br>
+            {% for error in form.author.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.page_count.label }}<br>
+            {{ form.page_count(size=32) }}<br>
+            {% for error in form.page_count.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+         <p>
+            {{ form.rating.label }}<br>
+            {{ form.rating(size=32) }}<br>
+            {% for error in form.rating.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
     </form>
-</body>
+
+    <h1>Books</h1>
+    <table>
+        <tr>
+            <th>Thumbnail</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Page Count</th>
+            <th>Rating</th>
+        </tr>
+      {% for book in books %}
+        <tr>
+            <td> <img src="{{book.thumbnail}}"></td>
+            <td>{{book.title}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.page_count}}</td>
+            <td>{{book.maturity_rating}}</td>
+          <td>
+            <form method="post" action="./update" style="display: inline">
+              <input type="hidden" value="{{book.title}}" name="oldtitle">
+              <input type="text" value="{{book.title}}" name="newtitle">
+              <input type="submit" value="Update">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="./delete" style="display: inline">
+              <input type="hidden" value="{{book.title}}" name="title">
+              <input type="submit" value="Delete">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+{% endblock %}
 </html>
